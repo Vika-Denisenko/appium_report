@@ -39,6 +39,7 @@ def get_appium_android_studio_chrome_driver() -> AppiumWebDriver:
     appium_driver.switch_to.context(context)
     return appium_driver
 
+
 def get_chrome_driver() -> WebDriver:
     options = Options()
     options.add_argument('--no-sandbox')
@@ -51,20 +52,21 @@ def get_chrome_driver() -> WebDriver:
 
 
 @pytest.fixture(scope="module")
-def driver() -> Generator[AppiumWebDriver | None, None, None]:
+def driver() -> Generator[AppiumWebDriver | WebDriver, None, None]:
     drv = get_appium_android_studio_chrome_driver()
     yield drv
     drv.quit()
 
 
 local_html_file_path = os.path.abspath("index.html")
-file_url = "http://localhost:8000/index.html"
+file_url = "https://Vika-Denisenko.github.io/appium_report/index.html"
 
 
-def test(driver:AppiumWebDriver|WebDriver) -> None:
+def test(driver: AppiumWebDriver | WebDriver) -> None:
     driver.get(file_url)
     input_field = driver.find_element(By.CSS_SELECTOR, "input")
     input_field.send_keys("Test text")
+    time.sleep(5)
     submit_button = driver.find_element(By.CSS_SELECTOR, "button")
     submit_button.click()
     message = WebDriverWait(driver, 10).until(
