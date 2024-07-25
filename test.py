@@ -59,14 +59,17 @@ def driver() -> Generator[AppiumWebDriver | WebDriver, None, None]:
 
 
 local_html_file_path = os.path.abspath("index.html")
-file_url = "https://Vika-Denisenko.github.io/appium_report/index.html"
+# file_url = "https://Vika-Denisenko.github.io/appium_report/index.html"
+file_url = "http://localhost:63342/appium_report/index.html?_ijt=1kr49n19k54rb1cj30psrn63rv&_ij_reload=RELOAD_ON_SAVE"
 
 
 def test(driver: AppiumWebDriver | WebDriver) -> None:
     driver.get(file_url)
     input_field = driver.find_element(By.CSS_SELECTOR, "input")
-    input_field.send_keys("Test text")
-    time.sleep(5)
+
+    input_field.click()
+    input_field.send_keys("Test+1234!")
+    # time.sleep(5)
     submit_button = driver.find_element(By.CSS_SELECTOR, "button")
     submit_button.click()
     message = WebDriverWait(driver, 10).until(
